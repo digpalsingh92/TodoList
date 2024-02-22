@@ -1,12 +1,21 @@
 import { useState } from "react";
+import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-const TodoInput = ({ addList }) => {
+const TodoInput = () => {
   const [inputText, setInputText] = useState("");
 
   const handleClick = () => {
-    addList(inputText);
-    setInputText("");
+    // addList(inputText);
+    // setInputText("");
+    axios
+      .post("http://localhost:5000/add", { inputText: inputText })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -21,7 +30,7 @@ const TodoInput = ({ addList }) => {
         }}
       />
       <button
-        className="w-24 h-10 font-semibold bg-[#e82a2a] ml-2.5 text-lg cursor-pointer shadow-[0_5px_10px rgba(0,0,0,0.4)] border-none transition-[0.3s]"
+        className="w-24 h-10 rounded font-semibold bg-[#e82a2a] ml-2.5 text-lg cursor-pointer shadow-[0_5px_10px rgba(0,0,0,0.4)] border-none transition-[0.3s]"
         type="submit"
         onClick={handleClick}
       >
