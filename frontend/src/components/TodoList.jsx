@@ -1,18 +1,37 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
-const TodoList = ({ items, deleteItem, index }) => {
+const TodoList = ({ items, refreshTodos }) => {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    setTodos(items);
+  }, [items]);
+
+  const deleteTodo = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/todo/${id}`);
+      refreshTodos(); // Refresh todos after deletion
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className=" self-center mt-2 list-none border-2 border-solid border-[#00d5ff] w-[80%] h-10 px-2.5 flex relative items-center text-white">
-      {items}
-      <span className="absolute right-2.5 mb-4 cursor-pointer hover:text-red-600">
-        <FaTrashAlt
-          onClick={(e) => {
-            deleteItem(index);
-          }}
-        />
-      </span>
+    <div style={{ margin: "15px" }}>
+      {todos.map((todo) => (
+        <div
+          key={todo._id}
+          className="flex justify-between"
+          style={{ border: "3px solid green", padding: "8px", marginBottom: "5px", borderRadius: "5px" }}
+        >
+          {todo.inputText}
+          <span onClick={() => deleteTodo(todo._id)} style={{ cursor: 'pointer' }}>
+            <FaTrashAlt />
+          </span>
+        </div>
+      ))}
     </div>
   );
 };

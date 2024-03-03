@@ -1,27 +1,29 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 
 const App = () => {
-  const [listTodo, setListTodo] = useState([]);
+  const [todos, setTodos] = useState([]);
+
+  const refreshTodos = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/todo");
+      setTodos(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/todo")
-      .then((result) => setListTodo(result.data))
-      .catch((err) => console.log(err));
+    refreshTodos();
   }, []);
 
-  // const deleteItem = (Key) => {
-  //   let newListTodo = [...listTodo];
-  //   newListTodo.splice(Key, 1);
-  //   setListTodo([...newListTodo]);
-  // };
+
   return (
     <div className="items-center justify-center flex h-[100vh]">
       <div className="h-[500px] w-[500px] bg-[#345] rounded-xl">
-        <TodoInput />
+        <TodoInput refreshTodos={refreshTodos} />
         <h2
           style={{ color: "white", margin: 15 }}
           className="text-xl font-bold"
@@ -29,16 +31,7 @@ const App = () => {
           TODOs
         </h2>
         <hr />
-        {listTodo.map((listItem, i) => {
-          return (
-            <TodoList
-              key={i}
-              // index={i}
-              items={listItem.inputText}
-              // deleteItem={deleteItem}
-            />
-          );
-        })}
+        <TodoList items={todos} refreshTodos={refreshTodos} />
       </div>
     </div>
   );
