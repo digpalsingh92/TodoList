@@ -1,21 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
 
-// eslint-disable-next-line react/prop-types
-const TodoInput = () => {
+const TodoInput = ({ refreshTodos }) => {
   const [inputText, setInputText] = useState("");
 
-  const handleClick = () => {
-    // addList(inputText);
-    // setInputText("");
-    axios
-      .post("http://localhost:5000/add", { inputText: inputText })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
+  const handleClick = async () => {
+    try {
+      await axios.post("http://localhost:5000/add", {
+        inputText,
       });
+      setInputText("");
+      refreshTodos(); // Refresh todos after adding a new one
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
