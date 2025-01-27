@@ -1,11 +1,1 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  background-color: rgb(49, 48, 48);
-}
+@import "tailwindcss";

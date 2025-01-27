@@ -1,21 +1,17 @@
 {
-  "name": "backend",
+  "name": "todo-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a basic todo",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
-  "keywords": [],
-  "author": "",
+  "author": "Digpal singh",
   "license": "ISC",
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "mongoose": "^8.1.3"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.3"
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0",
+    "zod": "^3.23.8"
   }
 }
